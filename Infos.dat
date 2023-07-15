@@ -1,0 +1,11 @@
+Template /userapp/APEC_Spr2023/New_APEC/template
+Tinker /sysapps/ubuntu-applications/openmolcas/22.10/build/tinker-6.3.3/bin/
+Version Tk 6.3.3
+Queue SLURM
+Gromacs YES
+GroPath /userapp/APEC_Spr2023/gromacs-2019.3/bin/bin
+Dowser YES
+DowPath /userapp/APEC_Spr2023/dowser/bin/dowser
+Modeller NO
+SCWRL4 YES
+Dimer NO
