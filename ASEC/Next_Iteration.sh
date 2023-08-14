@@ -25,8 +25,10 @@ fi
 
 mkdir ../Step_$(($Step+1))
 mkdir ../Step_$(($Step+1))/Dynamic
+./update_infos.sh "Next_script" "MD_2_QMMM" Infos.dat
 cp Infos.dat ../Step_$(($Step+1))
 ./update_infos.sh "Step" $(($Step+1)) ../Step_$(($Step+1))/Infos.dat
+cp Next_Script.sh ../Step_$(($Step+1))
 cp update_infos.sh $prm.prm template_* ../Step_$(($Step+1))
 cp -r Chromophore ../Step_$(($Step+1))
 cp $templatedir/ASEC/MD_NVT.sh ../Step_$(($Step+1))

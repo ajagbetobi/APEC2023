@@ -32,7 +32,7 @@ echo ""
 echo "                                                                 Written by: Yoelvis Orozco-Gonzalez "
 echo "                                               with contributions by: M. Pabel Kabir and Samer Gozem "
 echo "                                                                 Gozem Lab, Georgia State University "
-echo "                                                 Latest version, May 2021 by Yoelvis Orozco-Gonzalez "
+echo "                                                 Latest version, July 2023 by Yoelvis Orozco-Gonzalez "
 echo "*****************************************************************************************************"
 echo "*****************************************************************************************************"
 echo ""
@@ -43,7 +43,8 @@ echo ""
 module load openmolcas
 module load gromacs
 
-# Define the path of the APEC code installation directory and copy generic Infos.dat file from there to current APEC procedure directory.
+# Define the path of the APEC code installation directory 
+# and copy generic Infos.dat file from there to current APEC procedure directory.
 
 camino="/userapp/APEC_Spr2023/New_APEC/template"
 cp $camino/Infos.dat .

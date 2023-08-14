@@ -5,7 +5,7 @@
 # PDB file must be in the same directory, and its complete name must be given as an argument
 # The directory of execution must include the file labelret, with proper retinal labels
 #
-# Retrieving retinal chain label and its lysine number from Infos.dat
+# Retrieve retinal chain label and its lysine number from Infos.dat
 # dowser
 #
 pdb=$1

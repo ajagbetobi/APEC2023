@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 #
-# Retrieving information from Infos.dat
+# Retrieve Project information from Infos.dat
 #
 Project=`grep "Project" Infos.dat | awk '{ print $2 }'`
 templatedir=`grep "Template" Infos.dat | awk '{ print $2 }'`
@@ -16,12 +16,13 @@ chargechr=`grep "Chromo_Charge" Infos.dat | awk '{ print $2 }'`
 
 echo ""
 echo " Name of the project is ${Project}"
-echo " ${prm}.prm file found, and i am using it..."
+echo " ${prm}.prm file is going to be used."
 echo ""
+
 #
-# Creating the directory where hydrogen atoms MM minimization will be done
-# and putting the required files
-#
+# Check if Minimization directory exists, restart Minimization if so.
+
+#? I'd like clarification here.
 if [[ -d Minimize_${Project} ]]; then
    ./smooth_restart.sh Minimize_${Project} "Do you want to re-run Dowser + H minimization? (y/n)" 1
    if [[ ! -f Infos.dat ]]; then
@@ -29,6 +30,9 @@ if [[ -d Minimize_${Project} ]]; then
       exit 0
    fi
 fi
+
+# Create the directory where hydrogen atoms MM minimization will be done
+# and put the required files.
 mkdir Minimize_${Project}
 cp $Project.pdb Minimize_${Project}
 cd Minimize_${Project}
@@ -40,8 +44,11 @@ cp $templatedir/soglia .
 cp $templatedir/pdb-to-gro.sh .
 
 #
-# Befor the energy minimization dowser will be used to deal with external/internal waters
+# Before the energy minimization dowser will be used to deal with external/internal waters
 #
+
+#? I'd like clarification here.
+
 if [[ $dowser == "YES" ]]; then
    mkdir ${Project}_dowser
    cp $templatedir/carbret_dow ${Project}_dowser/labelret
@@ -63,19 +70,22 @@ if [[ $dowser == "YES" ]]; then
    mv ../$Project.pdb ../$Project.pdb.old.1
    cp $Project.pdb ../
    cd ..
+
+#? I'd like clarification here.
 ######
 #  Dowser is adding HZ1 even though nAT is selected
 #   if [[ $retstereo == "nAT" ]]; then
 #      sed -i "/ HZ1 RET /d" $Project.pdb
 #   fi
 ######
+
 else
    cp $templatedir/carbret labelret
 fi
 
 #
-# Converting the PDB into a format suitable for Gromacs by using pdb-to-gro.sh
-# Output must be different if Dowser was used
+# Convert the PDB into a format suitable for Gromacs by using pdb-to-gro.sh
+# Output must be different if Dowser was used.
 #
 ./pdb-to-gro.sh $Project.pdb $dowser
 if [[ -f ../arm.err ]]; then
@@ -87,8 +97,9 @@ if [[ $checkpdbdow -ne 0 ]]; then
    echo "NewStep.sh 2 PDBtoGroProblem" >> ../arm.err
    exit 0
 fi
+
 #
-# Backing up the starting PDB and renaming new.pdb (the output of pdb-to-gro.sh)
+# Back up the starting PDB and rename new.pdb (output of pdb-to-gro.sh)
 #
 mv $Project.pdb $Project.pdb.old.2
 mv new.pdb $Project.pdb
@@ -96,13 +107,15 @@ echo " $Project.pdb converted successfully! Now it will converted into $Project.
 echo " the Gromacs file format"
 echo ""
 
+#? I'd like clarification here.
 wat=`grep -c "OW  HOH" $Project.pdb`
 ../update_infos.sh "DOWSER_wat" $wat ../Infos.dat
 
 #
-# pdb2gmx is the Gromacs utility for generating gro files and topologies
+# pdb2gmx is the Gromacs utility for generating gro files and topologies.
 #
 
+#? I'd like clarification here.
 $gropath/gmx pdb2gmx -f $Project.pdb -o $Project.gro -p $Project.top -ff $amber -water tip3p 2> grolog
 checkgro=`grep 'Writing coordinate file...' grolog`
    if [[ -z $checkgro ]]; then
@@ -117,12 +130,12 @@ checkgro=`grep 'Writing coordinate file...' grolog`
    fi
 
 #
-# The tampletes gro2tk and tk2gro will be created for future
-# back and forwards conversions
+# The templates gro2tk and tk2gro will be created for future
+# back and forth conversions.
 #
 echo " **********************************************************************"
 echo ""
-echo " The Gromacs - Tinker templates will be created"
+echo "            The Gromacs - Tinker templates will be created"
 echo ""
 echo " **********************************************************************"
 cd ..
@@ -131,6 +144,8 @@ mkdir Templates
 cp Minimize_$Project/$Project.gro Templates
 cp $templatedir/$prm.prm Templates
 cd Templates
+
+#? I'd like clarification here.
 sed -i "s/HOH/SOL/g" $Project.gro
 
 #
@@ -138,6 +153,8 @@ sed -i "s/HOH/SOL/g" $Project.gro
 # allow Tinker reading
 #
 cp $templatedir/ASEC/pdb-format-new_mod.sh .
+
+#? I'd like clarification here.
 $gropath/gmx editconf -f ${Project}.gro -o $Project.pdb -label A
 ./pdb-format-new_mod.sh $Project.pdb
 
@@ -147,12 +164,14 @@ $gropath/gmx editconf -f ${Project}.gro -o $Project.pdb -label A
 mv final-tk.pdb $Project-tk.pdb
 
 # If PRO is a terminal residue (N-terminal or residue 1) the extra hydrogen is labeled in 
-# GROMACS as H2, being H1 and H2 the hydrogens bonded to the N. But in TINKER
+# GROMACS as H2, H1 and H2 being the hydrogens bonded to the N. But in TINKER
 # (specifically in the pdbxyz) these hydrogens are labeled as H2 and H3. So, it will be relabeled.
 # This is also performed in MD_2_QMMM.sh
+#? I'd like clarification here.
 sed -i "s/ATOM      3  H2  PRO A   1 /ATOM      3  H3  PRO A   1 /" $Project-tk.pdb
 sed -i "s/ATOM      2  H1  PRO A   1 /ATOM      2  H2  PRO A   1 /" $Project-tk.pdb
 
+#? I'd like clarification here.
 $tinkerdir/pdbxyz $Project-tk.pdb << EOF
 ALL
 $prm
@@ -166,6 +185,8 @@ sed -i "s|numero|$numatoms|g" Templates_gro_tk.f
 
 cp $Project.gro final_Config.gro
 cp $Project-tk.xyz coordinates_tk.xyz
+
+#? I'd like clarification here.
 #   cp $templatedir/residuetypes.dat .
 gfortran Templates_gro_tk.f -o Templates_gro_tk.x
 ./Templates_gro_tk.x
@@ -180,7 +201,7 @@ cp $templatedir/ASEC/Solvent_box.sh ../
 echo ""
 echo "**********************************************************"
 echo " "
-echo " Continue executing: Solvent_box.sh"
+echo                  "Next Run Solvent_box.sh"
 echo ""
 echo "**********************************************************"
 echo ""
