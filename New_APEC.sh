@@ -49,6 +49,31 @@ module load gromacs
 camino="/userapp/APEC_Spr2023/New_APEC/template"
 cp $camino/Infos.dat .
 
+echo ""
+echo " This is the first step of APEC as a whole. For every instance you run APEC, this file is a requirement. 
+
+In this script, I will set up files and folder structures for further calculations, doing so by copying files and downloading programs from the supercomputer’s memory. 
+For this, I will do the following in order:
+
+1. Ask for a project name, which must NOT start with a number. 
+2. Ask for a pdb file to use, which must be in the same folder as New_APEC.sh
+3. Ask if you want to use the cavity file, if there’s one. 
+4. Find the chromophore file to use, which must be in the same folder as New_APEC.sh and must be saved as CHR_chain.xyz
+5. Ask for chromophore net charge, which you must be certain of before providing.
+6. Create a folder for the first iteration of calculations."
+echo "Would you like to proceed? [y/n]"
+echo ""
+read proceed
+
+if [[ $proceed == "y" ]]; then
+   echo " Ok, I will now run New_APEC.sh"
+   echo ""
+else
+   echo " Terminating ..."
+   echo ""
+   exit 0
+fi
+
 #
 # Ask for the name of the project
 #
