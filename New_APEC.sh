@@ -424,6 +424,8 @@ cp $templatedir/ASEC/update_infos.sh .
 ./update_infos.sh "Step" "0" Infos.dat
 ./update_infos.sh "Init_Charge" $carga Infos.dat
 ./update_infos.sh "Chromo_Charge" $chr Infos.dat
+./update_infos.sh "Next_script" "NewStep.sh" Infos.dat
+
 cp $templatedir/NewStep.sh .
 
 #Copy Next_Script from TemplateDir to Step_0 folder
