@@ -14,6 +14,50 @@ chr=`grep "Chromo_Charge" Infos.dat | awk '{ print $2 }'`
 amber=`grep "AMBER" Infos.dat | awk '{ print $2 }'`
 chargechr=`grep "Chromo_Charge" Infos.dat | awk '{ print $2 }'`
 
+
+
+echo ""
+echo " This is the second step of APEC. 
+
+In this script, I will set up the molecular structure of the protein for dynamics in a few steps:
+
+A. Using Dowser, I will:
+
+  1. Remove water molecules that are not contained in the protein from the pdb crystal structures provided. 
+     This is because these water molecules are not usually important and can affect 
+     our next step - Molecular Dynamics - undesirably. 
+  2. Add hydrogens to the protein backbone structure using, to ensure the protein is similar to in vivo structure. 
+
+B. Next, I will convert this new pdb structure file to .gro format for Gromacs - a molecular dynamics software. 
+   Using Gromacs,  I will:
+
+  1. Add hydrogens to the sidechains, making the protein structure more accurate. 
+  2.  Minimise the whole protein structure. 
+
+With this optimised and complete structure, we are ready to set up Molecular Dynamics.
+
+NOTE:
+
+In preparation for further calculations, template files for conversion between .pdb, .xyz and .gro formats 
+are also created in this step."
+
+echo "Would you like to proceed? [y/n]"
+echo ""
+read proceed
+
+if [[ $proceed == "y" ]]; then
+   echo " Ok, I will now run NewStep.sh"
+   echo ""
+else
+   echo " Terminating ..."
+   echo ""
+   exit 0
+fi
+
+
+
+
+
 echo ""
 echo " Name of the project is ${Project}"
 echo " ${prm}.prm file is going to be used."
