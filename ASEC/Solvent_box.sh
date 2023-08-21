@@ -27,6 +27,68 @@ cp ../Chromophore/${chromophore}.pdb .
 cp -r $templatedir/$amber.ff .
 cd $amber.ff/
 
+echo ""
+echo " This is the third step of APEC overall. Here we will finish setting 
+       up the protein system for Molecular Dynamic calculations. 
+
+It will happen in a few steps, viz:
+
+A. I will build up the flavin system to use in the MD. To do this, I will:
+
+   1. Ask for the flavin oxidation state model to use. Choose one of the following: 
+    
+    a) Quinone - Oxidized state.
+    b) Semi-quinone - Intermediate Redox state.
+    c) Hydro-quinone - Reduced state.
+    
+    Be sure of of your choice as this is important. 
+    It describes the properties of the chromophore which will affect the accuracy of our calculations. 
+    
+   2. Ask for which flavin tail to use. Your choices are:
+    a. FMN - Flavin Mono-Nucleotide.
+    b. FAD - Flavin Adenine Dinucleotide.
+    
+    This is important in setting up the QM-MM Interface in this script 
+    and later on. Your choice will depend on the protein. 
+    
+
+B. I will insert the chromophore into the protein structure from the NewStep.sh. 
+   The insertion will be inside the protein cavity where its activity will take place. 
+
+C. I will minimize the protein side chains - not backbone - and chromophore hydrogens using Gromacs. 
+   This is done by dividing the calculation into batches of 1000 steps to avoid crashing on photon.
+
+D. I will embed this newly relaxed system in a solvent box and minimize it in totality. 
+   This is done in a few steps, viz:
+
+   1. Embedding the protein in a box of water. For this, I will:
+    a. Ask for the size of the cubic box you’d prefer. I suggest 7.0 nm for a monomer and 10.0 nm for a dimer.  
+    b. Add water molecules into the specified cubic box. 
+    c. Remove the new solvent molecules which mistakenly get into protein crevices as they will affect protein energetics. 
+    d. Differentiate the solvent water molecules from internal protein water molecules. 
+       These internal waters are excluded from Molecular Mechanics minimization. 
+   
+   2. Energetically minimizing the system - including the protein backbone - using Molecular Mechanics with Gromacs, as follows:
+    a. I will generate topology files for the minimization of the solvent box and its contained protein system.
+    b. I will specify groups to be frozen during this minimization. This is usually localised to the chemically active QM regions. 
+       This specification will be unique to the flavin tail specified in step A.2. above.
+    c. I will add ions to the solvent to neutralise the total charge of the system.
+    d. I will ask if you want to add extra ions to the solvent to mimic experimental conditions or leave as is. 
+    e. Finally, I will run the MM energy minimization of the solvated protein - excluding specific frozen region(s). 
+       Again, this is done by dividing the calculation into batches of 1000 steps to avoid crashing on photon."
+
+echo "Would you like to proceed? [y/n]"
+echo ""
+read proceed
+
+if [[ $proceed == "y" ]]; then
+   echo " Ok, I will now run New_APEC.sh"
+   echo ""
+else
+   echo " Terminating ..."
+   echo ""
+   exit 0
+fi
 
 option=0
 while [[ $option -ne 1 && $option -ne 2 && $option -ne 3 ]]; do
@@ -70,6 +132,10 @@ fi
 if [[ $option -eq 3 && $fmnfad == "FMN" ]]; then
    cp $templatedir/ASEC/manchester_FMNH2_rtp new_rtp
 fi
+
+
+#? Here We will add the options for FAD oxidation States parameters.
+
 
 #cp ../../ESPF_charges/new_rtp .
 cat new_rtp >> aminoacids.rtp
@@ -142,7 +208,7 @@ cp $templatedir/ASEC/ndx-maker_mod.sh .
 ./ndx-maker_mod.sh $Project 5 $backb
 
 #
-# Runing the MM side chains energy minimization in the loging node.
+# Running the MM side chain energy minimization in the login node.
 # In order to do this we divided the minimization steps in batches
 # of 1000 steps. Otherwise it would be killed bu the system
 #
@@ -581,7 +647,7 @@ if [[ $charge -eq 0 && $pairs -eq 0 ]]; then
 fi
 
 #
-# Runing the MM energy minimization. Again it will run in the loging node dividing the number of steps
+# Runing the MM energy minimization. Again it will run in the login node dividing the number of steps
 # in batches of 1000 steps to avoid being killed the the system
 # (See the self explaning echoes)
 #
@@ -621,7 +687,7 @@ while [[ conver -ne 0 ]]; do
          echo "**********************************************************"
          echo ""
 #         echo " Pleasde execute now: ESPF_charges.sh"
-         echo " Pleasde execute now: MD_NPT.sh"
+         echo                      "Now Run MD_NPT.sh"
          echo ""
          echo "**********************************************************"
          echo ""
