@@ -25,7 +25,7 @@ fi
 
 mkdir ../Step_$(($Step+1))
 mkdir ../Step_$(($Step+1))/Dynamic
-./update_infos.sh "Next_script" "MD_2_QMMM" Infos.dat
+./update_infos.sh "Next_script" "MD_NVT.sh" Infos.dat
 cp Infos.dat ../Step_$(($Step+1))
 ./update_infos.sh "Step" $(($Step+1)) ../Step_$(($Step+1))/Infos.dat
 cp Next_Script.sh ../Step_$(($Step+1))
