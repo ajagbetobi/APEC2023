@@ -17,7 +17,9 @@ amber=`grep "AMBER" Infos.dat | awk '{ print $2 }'`
 
 
 echo ""
-echo " This is the fourth step of APEC and the first step 
+echo " 
+
+This is the fourth step of APEC and the first step 
 in the Molecular Dynamics portion of the protocol. 
 
 In this step, I will find the optimal volume to run the next step of the dynamics. 
@@ -31,9 +33,10 @@ The Molecular dynamics will be run in three subsequent phases:
 1. Heating: In this phase I will increase the temperature of the whole system 
    (i.e. protein + solvent in solvent box) slowly to a target temperature. 
 
-2. Equilibration: In this phase I will set up the NPT system to ensure complete equilibrium 
-   across the solvent box. This will remove the errors caused by adding the solvent and ions 
-   to the protein sytem in the previous step, and make the solvent box’s molecular properties even. 
+2. Equilibration: Equilibration is the point when the properties of the system no longer change with time. 
+   To get to that point, in this phase I will set up the NPT system to ensure complete equilibrium across the solvent box. 
+   This will remove the errors caused by adding the solvent and ions to the protein sytem in the previous step, 
+   and make the solvent box’s molecular properties even. 
    This phase will also relax the system and establish the volume for the next MD step.
     
 3. Production:
@@ -46,11 +49,11 @@ To do all these, I will ask you:
 1. For a target temperature (a.k.a. Production temperature) to heat the system to. 
    It is usually 300 Kelvin. 
 
-2. For a timecale for the heating. Usually 300 picoseconds.
+2. For a timespan for the heating. Usually 300 picoseconds.
 
-3. For a timescale for equilibration. Usually 2000 picosenconds.
+3. For a timespan for equilibration. Usually 2000 picosenconds.
 
-4. For a time scale for production. 
+4. For a timespan for production. 
    For this NPT step, I will not need production data, so this will be 0. 
 
 5. If you would like to use GPUs. 
@@ -62,7 +65,9 @@ N.B:
 
 1. To check if this simulation is still running, use the squeue -u username  command.
 2. This step is only available for the first iteration of APEC i.e. Step_0, 
-   because afterwards, the Volume parameter is established."
+   because afterwards, the Volume parameter is established.
+   
+"
 echo "Would you like to proceed? [y/n]"
 echo ""
 read proceed

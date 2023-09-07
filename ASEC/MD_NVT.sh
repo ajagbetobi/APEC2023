@@ -15,6 +15,60 @@ moldy=`grep "MD_ensemble" Infos.dat | awk '{ print $2 }'`
 amber=`grep "AMBER" Infos.dat | awk '{ print $2 }'`
 tmpdir=`grep "tempdir" Infos.dat | awk '{ print $2 }'`
 
+
+
+echo ""
+echo " 
+
+This is the second MD step in the APEC protocol. 
+This is similar to the previous step with a variation in the parameters 
+kept constant. Here, we will keep the Number of molecules, Volume and Temperature constant. 
+
+The NVT ensemble gives us the changes in Helmholtz free energy (energy available to do mechanical work) 
+and shows how the energy is being used in the motion of the protein and its solvent environment over time. 
+
+I will use this motion to get an averaged protein environment in the subsequent steps of APEC. 
+
+For this step, I will ask for a few specifications to run the MD_NVT dynamics of the solvated protein. 
+
+Firstly, I will ask for:
+
+1. Production Temperature - This is the target temperature where the actual dynamics will be run. 
+This is normally 300 Kelvin.
+
+Then:
+
+1. If this is Step_0, I will heat the system to the target temperature. So I will also ask for: 
+    a. The length of the heating phase. This is normally 300 picoseconds.
+    b. The length of the equilibration phase. This is normally 4700 picoseconds.
+
+If this is not Step_0, I will only ask for the equilibration timespan, which is usually 5000 picoseconds. 
+
+Next:
+
+1. I will ask for the production timespan. The production phase is when I will calculate 
+and take pictures of the movement of the protein overtime in the solvent box. This is usually 5000 picoseconds also. 
+
+Lastly, GPUs. In this step of the procedure, we use GPUs to speed up the calculations. 
+We do this by parrarelizing - breaking down the MD calculation into pieces and running each piece separately. 
+To do this, I will ask:
+
+1. If you want to parallelize the MD calculation.
+2. How many pieces you want to split it into to run in parallel. Each piece will run the full thermalization step 
+and the length of the production step will be divided by the number of pieces.
+
+NOTE:
+1. It is important to be conscious of the number of MDs you run in parallel because:
+    a. The GPU nodes are shared by other lab members.
+    b. The number of parallel MDs become relevant in the subsequent steps of APEC. 
+2. As with MD_NPT, this step is also run in gromacs.
+
+"
+echo "Would you like to proceed? [y/n]"
+echo ""
+read proceed
+
+
 cd Dynamic
 if [[ $step -eq 0 ]]; then
    if [[ -d Sim_NPT/output ]]; then
@@ -22,7 +76,7 @@ if [[ $step -eq 0 ]]; then
       echo " *********************************************************************"
       echo "                      Warning!"
       echo ""
-      echo " MD Sim_NPT/output directory already excist. We are goint to use it..."
+      echo " MD Sim_NPT/output directory already excist. I am going to use it..."
       echo ""
       echo " *********************************************************************"
       echo ""
@@ -39,7 +93,7 @@ if [[ $step -eq 0 ]]; then
          echo ""
          echo "************************************************************************"
          echo ""
-         echo " It seems that the NPT MD is still running or it did not finish properly"
+         echo " It seems that the NPT MD is still running or it did not finish properly."
          echo ""
          echo "************************************************************************"
          echo ""
@@ -159,8 +213,8 @@ while [[ $gpu != "y" && $gpu != "n" ]]; do
    echo ""
    echo " Do you want to use the GPUs to compute the dynamics? (y/n)"
    echo ""
-   echo " Take into account how many GPU nodes are available if you"
-   echo " to parallelize the production next."
+   echo " Take into account how many GPU nodes are available if you want"
+   echo " to parallelize the production."
    echo ""
    echo ""
    read gpu
@@ -231,6 +285,6 @@ cp $templatedir/Analysis_MD.sh .
 echo ""
 echo "***************************************************************"
 echo ""
-echo " Wait for the NVT molecular dynamics to end then run MD_ASEC.sh"
+echo " Wait for the NVT molecular dynamics to end, then run MD_ASEC.sh"
 echo ""
 echo "***************************************************************"
