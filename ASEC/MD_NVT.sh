@@ -68,6 +68,15 @@ echo "Would you like to proceed? [y/n]"
 echo ""
 read proceed
 
+if [[ $proceed == "y" ]]; then
+   echo " Ok, I will now run MD_NVT.sh"
+   echo ""
+else
+   echo " Terminating ..."
+   echo ""
+   exit 0
+fi
+
 
 cd Dynamic
 if [[ $step -eq 0 ]]; then

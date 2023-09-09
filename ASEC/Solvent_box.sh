@@ -82,7 +82,7 @@ echo ""
 read proceed
 
 if [[ $proceed == "y" ]]; then
-   echo " Ok, I will now run New_APEC.sh"
+   echo " Ok, I will now run Solvent_box.sh"
    echo ""
 else
    echo " Terminating ..."

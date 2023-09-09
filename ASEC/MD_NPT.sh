@@ -72,6 +72,15 @@ echo "Would you like to proceed? [y/n]"
 echo ""
 read proceed
 
+if [[ $proceed == "y" ]]; then
+   echo " Ok, I will now run MD_NPT.sh"
+   echo ""
+else
+   echo " Terminating ..."
+   echo ""
+   exit 0
+fi
+
 cd Dynamic
 
 #
