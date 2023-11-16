@@ -18,6 +18,75 @@ chromophore=`grep "chromophore" Infos.dat | awk '{ print $2 }'`
 nna=`grep "Added_NAs" Infos.dat | awk '{ print $2 }'`
 ncl=`grep "Added_CLs" Infos.dat | awk '{ print $2 }'`
 
+
+
+
+echo ""
+echo " 
+
+In this step, I will create the averaged protein and solvent environment.
+
+First, I will check for parallel MD runs. If they exist, I will ensure they have outputs. 
+If there are no MD outputs, I will cancel this step. 
+
+Next, I will read from the MD output(s) to select 100 equally separated configurations. 
+These configurations will always be larger than 1 picosecond apart (or 5 picoseconds 
+(ps) to be safe) to ensure that the configurations are uncorrelated. I will use them 
+to generate the APEC configuration.
+
+After selecting the 100 configurations, I will order the water molecules by distance 
+from the chromophore. This is needed to create an even 22 Angstrom (Å) spherical 
+shell to run the QMMM calculations. I use 22 Å because the total amount of pseudoatoms 
+in the APEC configuration must be less than 1,000,000  and 22 Å is in that limit 
+for LOV protein monomers. This limit is because of the software I use for QMMM called Molcas-Tinker.
+
+Next, I will select the first configuration of the 100 and apply the 22 Å distance criterion 
+to generate the first shell. With this, I can figure out the optimal number of atoms to be 
+included in the 22 Å sphere of every other configuration. I do this because, if I just select a 
+distance for all the configurations to order the water molecules and create a sphere, 
+because of the difference in the way the atoms are arranged per MD configuration, the number of 
+atoms captured in each will be different. This will result in an inaccurate average protein and 
+it can cause an increase in the number of atoms in the protein APEC past the limit.  
+
+With the optimal spherical distance and number of atoms per configuration figured out, 
+I will add the ions, the chromophore and additional waters to the system. 
+
+And finally, I will overlap 100 uncorrelated protein in solvent configurations to generate the APEC.
+
+NOTE:
+
+If the box size selected in Solvent_box.sh is too small, the protein will have more than is 
+containable by the specified box and I will have to abort this step because I do not have enough 
+information to proceed.
+   
+
+"
+echo "Would you like to proceed? [y/n]"
+echo ""
+read proceed
+
+if [[ $proceed == "y" ]]; then
+   echo "
+   "
+   echo " Ok, I will now run MD_ASEC.sh"
+   echo "
+   
+   "
+else
+   echo " Terminating ..."
+   echo ""
+   exit 0
+fi
+
+
+
+
+
+
+
+
+
+
 module load vmd
 
 confs=100
@@ -29,7 +98,7 @@ if [[ $numparallel -gt 1 ]]; then
          echo " *********************************************************************"
          echo "                      Warning!"
          echo ""
-         echo " MD seed_$i/output directory already excist. We are goint to use it..."
+         echo " MD seed_$i/output directory already exists. We are going to use it..."
          echo ""
          echo " *********************************************************************"
          echo ""
@@ -42,7 +111,7 @@ if [[ $numparallel -gt 1 ]]; then
          iget -r /arctic/projects/CHEM9C4/$USER/$dir Dynamic/seed_$i
          if [[ -f Dynamic/seed_$i/$dir/md.log ]]; then
             mv Dynamic/seed_$i/$dir Dynamic/seed_$i/output
-            irm -r /arctic/projects/CHEM9C4/$USER/$dir
+           irm -r /arctic/projects/CHEM9C4/$USER/$dir
          else
             echo ""
             echo "************************************************************************"
@@ -61,7 +130,7 @@ else
       echo " *********************************************************************"
       echo "                      Warning!"
       echo ""
-      echo " MD output directory already excist. We are goint to use it..."
+      echo " MD output directory already exists. We are going to use it..."
       echo ""
       echo " *********************************************************************"
       echo ""
@@ -95,7 +164,7 @@ fi
 # -"paso" indicates the time step in ps to write configurations in the ASEC configuration
 # -"skip" is the number configurations between the selected ones. It is based
 #  on the number of confugurations written in the tpr file
-# -"init" is the time in ps of the fist selected configuration
+# -"init" is the time in ps of the first selected configuration
 #
 wrt=`grep "nstxtcout" Dynamic/dynamic_sol_NVT.mdp | awk '{ print $3 }'`
 dt=`grep "dt                      =" Dynamic/dynamic_sol_NVT.mdp | awk '{ print $3 }'`
@@ -109,8 +178,8 @@ heatw=$(echo "scale=0; $heat/$paso" | bc)
 equiw=$(echo "scale=0; $equi/$paso" | bc)
 prodw=$(echo "scale=0; $prod/$paso" | bc)
 
-echo " These are the number of writen configurations:"
-echo "heat  equi  prod"
+echo " These are the number of written configurations:"
+echo "heat    equi   prod"
 echo "$heatw $equiw $prodw"
 echo " Writing step $paso ps"
 
