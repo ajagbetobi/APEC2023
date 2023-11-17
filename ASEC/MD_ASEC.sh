@@ -53,6 +53,12 @@ I will add the ions, the chromophore and additional waters to the system.
 
 And finally, I will overlap 100 uncorrelated protein in solvent configurations to generate the APEC.
 
+To do all this, I will your input to guide me on:  
+
+a. What I will order - in this case, SOL (Dynamic Solvent Molecules i.e. water) and,
+
+b. What I will order them towards - i.e. CHR (Flavin Chromophore).
+
 NOTE:
 
 If the box size selected in Solvent_box.sh is too small, the protein will have more than is 
