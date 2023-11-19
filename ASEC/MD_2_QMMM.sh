@@ -11,6 +11,69 @@ Step=`grep "Step" Infos.dat | awk '{ print $2 }'`
 solvent=`grep "SolventBox" Infos.dat | awk '{ print $2 }'`
 chromophore=`grep "chromophore" Infos.dat | awk '{ print $2 }'`
 
+
+
+
+
+echo ""
+echo " 
+
+In this script, I translate my outputs from Molecular Dynamics to a format relevant to QMMM calculations. 
+I use Molcas-Tinker for QMMM calculations and Gromacs for MD, and, because the software both require 
+specific formatting to carry out my intended calculations, I will be converting between them at different 
+points henceforth. 
+
+I will:
+
+a. Select the Gromacs file containing the configuration from Molecular Dynamics closest to the average.
+
+b. Remove the frozen chromophore from this file, because tinker does not recognize it in the current format.
+
+c. Convert the file from the Gromacs (.gro) format to Tinker(.xyz), by going from .gro to .pdb then 
+from .pdb to .xyz.
+
+d. Use the chromophore coordinates in the file selected in (a) above, the atom types in the CHR_chain.xyz 
+file provided at the start of the protocol and the protein Tinker(.xyz) file from (c) to create a combined 
+QM/MM description in .xyz format. 
+
+e. Using a tool in Tinker (xyzedit), I will add connectivities (i.e. information about which atom is 
+connected to which) to the combined QMMM .xyz file from (d). 
+
+With this, we are ready to run the QMMM optimizations. 
+
+NOTE:
+
+1. To do (d), I need a description of chromophore atoms unprovided in Tinker. This is already provided 
+   using atom types from in AMBER. If there’s any error related to this, refer to Amber99sb.prm.
+
+2. If I am in Step_0, I start the QMMM optimizations in the next script by running Molcami_OptSCF.sh. 
+   If I am not, the next script to run is Molcami_direct_CASSCF.sh.   
+
+"
+echo "Would you like to proceed? [y/n]"
+echo ""
+read proceed
+
+if [[ $proceed == "y" ]]; then
+   echo "
+   "
+   echo " Ok, I will now run MD_2_QMMM.sh"
+   echo "
+   
+   "
+else
+   echo " Terminating ..."
+   echo ""
+   exit 0
+fi
+
+
+
+
+
+
+
+
 #
 # The folder conversion is created to convert gro into pdb into Tinker xyz
 #
