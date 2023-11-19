@@ -44,7 +44,7 @@ With this, we are ready to run the QMMM optimizations.
 NOTE:
 
 1. To do (d), I need a description of chromophore atoms unprovided in Tinker. This is already provided 
-   using atom types from in AMBER. If there’s any error related to this, refer to Amber99sb.prm.
+   using atom types from AMBER. If there’s any error related to this, refer to Amber99sb.prm.
 
 2. If I am in Step_0, I start the QMMM optimizations in the next script by running Molcami_OptSCF.sh. 
    If I am not, the next script to run is Molcami_direct_CASSCF.sh.   
