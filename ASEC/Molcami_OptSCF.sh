@@ -22,13 +22,14 @@ Molcami_OptSCF=`grep "Molcami_OptSCF" Infos.dat | awk '{ print $2 }'`
 
 echo ""
 echo " 
+This is the third step of four in which I prepare my MD results for APEC-QMMM calculations. 
 
-In this script, I will prepare the files for the first QM calculations. 
-The goal of this step is to organise the files such that OpenMolcas-Tinker 
+In this script, I will prepare an important file for the first QM calculations. 
+The goal of this step is to organise the information such that OpenMolcas-Tinker 
 will understand my description of every atom in the QM and MM regions, and 
 the connection at the QMMM boundary. 
 
-Firstly, I will create a .key file describing all atoms and charges in 
+For this, I will create a .key file describing all atoms and charges in 
 the QMMM connected system. This .key file will contain labels QM,MM,LA,LQ, 
 LM, FX and XX, depending on the flavin cofactor. 
 

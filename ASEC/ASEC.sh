@@ -10,6 +10,84 @@ prm=`grep "Parameters" Infos.dat | awk '{ print $2 }'`
 solvent=`grep "SolventBox" Infos.dat | awk '{ print $2 }'`
 tmpdir=`grep "tempdir" Infos.dat | awk '{ print $2 }'`
 
+
+
+echo ""
+echo " 
+
+This is the last step of four in which I prepare my MD results 
+for APEC-QMMM calculations. To begin the QMMM calculations in the 
+next script, I will need three files:
+
+1. A .key file describing all atoms and charges in the QMMM 
+   connected system.
+
+2. An xyz file containing the configuration representing the 
+   average environment and 99 other configurations. 
+
+3. A parameters file providing information about the charges 
+   and van der Waals properties of the protein environment.
+
+***************************************************************
+
+                  Creating the Full .xyz File   
+
+***************************************************************
+
+
+I have gotten the first file from a previous step (Molcami_OptSCF.sh). 
+
+For the second, I have the .xyz file but it currently contains only the 
+configuration closest to the average of the environment. 
+So, I will add the atoms and connectivities from the other 99 
+configurations to this file using Fortran code (ASEC.f). 
+This will create the complete .xyz file.
+
+With this done, I will move on to the third file. 
+
+***************************************************************
+
+                   Creating the Full Parameters File
+
+***************************************************************
+
+I want to describe the protein environment as a smearing of the charges 
+and atomistic spheres of a single protein around the chromophore. 
+I use fortan code (New_parameters.f) to do this. In the code, I will 
+scale the charges and van Der Waals parameters for each atom in the 100 
+configurations by dividing the values for each atom by 100, such that the
+total of the charges and van Der Waals parameters will be equal to that 
+of a single configuration spread across a 3D space.
+
+I will add this information to the amber99sb.prm file I already have.
+
+And with this, I am ready to run QMMM calculations.
+
+
+**********NOTE:**********
+
+1. I use fortran code in this script, so if there’s any error be conscious of this.
+
+"
+ 
+echo "Would you like to proceed? [y/n]"
+echo ""
+read proceed
+
+if [[ $proceed == "y" ]]; then
+   echo "
+   "
+   echo " Ok, I will now run ASEC.sh"
+   echo "
+   
+   "
+else
+   echo " Terminating ..."
+   echo ""
+   exit 0
+fi
+
+
 #
 # Collecting data to run the QM/MM calculations
 #
@@ -48,7 +126,7 @@ gfortran ASEC.f -o ASEC.x
 mv new_coordinates_tk.xyz ${Project}_OptSCF.xyz
 
 #
-# This section is for obtaining the new force fiel parameters
+# This section is for obtaining the new force field parameters
 # of the ASEC pseudo-atoms
 #
 
@@ -113,10 +191,10 @@ cd ..
 cp $templatedir/ASEC/Molcami2_mod.sh .
 ../update_infos.sh "Next_script" "Molcami2_mod.sh" ../Infos.dat
 echo ""
-echo "******************************************************"
+echo "***************************************************************"
 echo ""
-echo " After complete the OptSCF/ANO-L-VDZ, run Molcami2_mod.sh"
+echo "  After completing the OptSCF/ANO-L-VDZ, run Molcami2_mod.sh   "
 echo ""
-echo "******************************************************"
+echo "***************************************************************"
 
 

@@ -14,14 +14,17 @@ chromophore=`grep "chromophore" Infos.dat | awk '{ print $2 }'`
 
 
 
-
 echo ""
 echo " 
 
+This is the second step of four in which I prepare my MD results for APEC-QMMM calculations. 
+
 In this script, I translate my outputs from Molecular Dynamics to a format relevant to QMMM calculations. 
-I use Molcas-Tinker for QMMM calculations and Gromacs for MD, and, because the software both require 
+I use Tinker-OpenMolcas for QMMM calculations and Gromacs for MD, and, because the software both require 
 specific formatting to carry out my intended calculations, I will be converting between them at different 
 points henceforth. 
+
+Here I will convert the MD outputs to Tinker-OpenMolcas format.
 
 I will:
 
@@ -39,7 +42,6 @@ QM/MM description in .xyz format.
 e. Using a tool in Tinker (xyzedit), I will add connectivities (i.e. information about which atom is 
 connected to which) to the combined QMMM .xyz file from (d). 
 
-With this, we are ready to run the QMMM optimizations. 
 
 NOTE:
 
