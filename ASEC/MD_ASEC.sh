@@ -56,9 +56,10 @@ And finally, I will overlap 100 uncorrelated protein in solvent configurations t
 
 To do all this, I will your input to guide me on:  
 
-a. What I will order - in this case, SOL (Dynamic Solvent Molecules i.e. water) and,
+a. A central structure to order the environment towards - i.e. CHR (Flavin Chromophore), and,
 
-b. What I will order them towards - i.e. CHR (Flavin Chromophore).
+b. What I will order in the environment - in this case, SOL (Dynamic Solvent Molecules i.e. water).
+
 
 NOTE:
 
