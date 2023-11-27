@@ -54,7 +54,7 @@ I will add the ions, the chromophore and additional waters to the system.
 
 And finally, I will overlap 100 uncorrelated protein in solvent configurations to generate the APEC.
 
-To do all this, I will your input to guide me on:  
+To do all this, I will need your input to guide me on:  
 
 a. A central structure to order the environment towards - i.e. CHR (Flavin Chromophore), and,
 
