@@ -30,24 +30,19 @@ In this step, I will create the averaged protein and solvent environment.
 First, I will check for parallel MD runs. If they exist, I will ensure they have outputs. 
 If there are no MD outputs, I will cancel this step. 
 
-Next, I will read from the MD output(s) to select 100 equally separated configurations. 
+Next, I will read from the MD output(s) to select 100 configurations. Those configurations
+are selected at regular inetervals from the production section of the MD simulation.
+The goal is to select 100 structures that are far (in time) from eah other and therefore not closely related. 
+This can help to ensure that the configurations are sampled in a way to be representative of the full MD simulation.
 These configurations will always be larger than 1 picosecond apart (or 5 picoseconds 
 (ps) to be safe) to ensure that the configurations are uncorrelated. I will use them 
-to generate the APEC configuration.
+to generate the APEC.
 
 After selecting the 100 configurations, I will order the water molecules by distance 
-from the chromophore. This is needed to create an even 22 Angstrom (Å) spherical 
+from the chromophore. This is needed to create an even 22 Angstrom (Å) 
 shell to run the QMMM calculations. I use 22 Å because the total amount of pseudoatoms 
 in the APEC configuration must be less than 1,000,000  and 22 Å is in that limit 
-for LOV protein monomers. This limit is because of the software I use for QMMM called Molcas-Tinker.
-
-Next, I will select the first configuration of the 100 and apply the 22 Å distance criterion 
-to generate the first shell. With this, I can figure out the optimal number of atoms to be 
-included in the 22 Å sphere of every other configuration. I do this because, if I just select a 
-distance for all the configurations to order the water molecules and create a sphere, 
-because of the difference in the way the atoms are arranged per MD configuration, the number of 
-atoms captured in each will be different. This will result in an inaccurate average protein and 
-it can cause an increase in the number of atoms in the protein APEC past the limit.  
+for LOV protein monomers. This limit is because of the software I use for QMMM called OpenMolcas-Tinker.
 
 With the optimal spherical distance and number of atoms per configuration figured out, 
 I will add the ions, the chromophore and additional waters to the system. 
@@ -63,7 +58,7 @@ b. What I will order in the environment - in this case, SOL (Dynamic Solvent Mol
 
 NOTE:
 
-If the box size selected in Solvent_box.sh is too small, the protein will have more than is 
+If the box size selected in Solvent_box.sh is too small, the protein will have more atoms than is 
 containable by the specified box and I will have to abort this step because I do not have enough 
 information to proceed.
    

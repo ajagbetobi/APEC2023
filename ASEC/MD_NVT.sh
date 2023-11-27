@@ -21,25 +21,24 @@ echo ""
 echo " 
 
 This is the second MD step in the APEC protocol. 
-This is similar to the previous step with a variation in the parameters 
-kept constant. Here, we will keep the Number of molecules, Volume and Temperature constant. 
+This time, we will keep the Number of molecules, Volume and Temperature constant (hence, NVT). 
 
 The NVT ensemble gives us the changes in Helmholtz free energy (energy available to do mechanical work) 
 and shows how the energy is being used in the motion of the protein and its solvent environment over time. 
 
-I will use this motion to get an averaged protein environment in the subsequent steps of APEC. 
+I will use this motion to later by randomly selecting some "snapshots" (i.e., static stuctures along the dynamics) to be used in subsequent steps of APEC. 
 
 For this step, I will ask for a few specifications to run the MD_NVT dynamics of the solvated protein. 
 
 Firstly, I will ask for:
 
 1. Production Temperature - This is the target temperature where the actual dynamics will be run. 
-This is normally 300 Kelvin.
+This is normally 300 Kelvin (room temperature).
 
 Then:
 
 1. If this is Step_0, I will heat the system to the target temperature. So I will also ask for: 
-    a. The length of the heating phase. This is normally 300 picoseconds.
+    a. The length of the heating phase. This is normally 300 picoseconds (gradually heating by 1 Kelvin/ps)
     b. The length of the equilibration phase. This is normally 4700 picoseconds.
 
 If this is not Step_0, I will only ask for the equilibration timespan, which is usually 5000 picoseconds. 
@@ -49,19 +48,20 @@ Next:
 1. I will ask for the production timespan. The production phase is when I will calculate 
 and take pictures of the movement of the protein overtime in the solvent box. This is usually 5000 picoseconds also. 
 
-Lastly, GPUs. In this step of the procedure, we use GPUs to speed up the calculations. 
-We do this by parrarelizing - breaking down the MD calculation into pieces and running each piece separately. 
+Lastly, I will ask if you would like to use a GPU or CPU. GPUs are useful to speed up the calculations, if availalble.
+Next, I will ask about parralelizing - breaking down the MD calculation into different jobs that each run separately on a different CPU or GPU.
+Parallelizing can also help reduce the ammount of time spent on the calculations.
 To do this, I will ask:
 
 1. If you want to parallelize the MD calculation.
-2. How many pieces you want to split it into to run in parallel. Each piece will run the full thermalization step 
-and the length of the production step will be divided by the number of pieces.
+2. How many jobs you want to split it into to run in parallel. Each piece will run the full thermalization step 
+and the length of the production step will be divided by the number of jobs.
 
 NOTE:
 1. It is important to be conscious of the number of MDs you run in parallel because:
     a. The GPU nodes are shared by other lab members.
     b. The number of parallel MDs become relevant in the subsequent steps of APEC. 
-2. As with MD_NPT, this step is also run in gromacs.
+2. As with MD_NPT, this step is also run in Gromacs.
 
 "
 echo "Would you like to proceed? [y/n]"

@@ -24,11 +24,11 @@ in the Molecular Dynamics portion of the protocol.
 
 In this step, I will find the optimal volume to run the next step of the dynamics. 
 
-Firstly, I will need to set up and keep other parameters - Number of atoms (N), Pressure (P) 
-and Temperature (T) constant. To do this, I will need your input specifying the values 
+Firstly, I will need to keep other parameters constant; namely, Number of atoms (N), Pressure (P) 
+and Temperature (T). To do this, I will need your input specifying the values 
 for the duration of the three phases of the MD and the Temperature parameter.
 
-The Molecular dynamics will be run in three subsequent phases:
+The Molecular dynamics will be run in three consecutive phases:
 
 1. Heating: In this phase I will increase the temperature of the whole system 
    (i.e. protein + solvent in solvent box) slowly to a target temperature. 
@@ -49,7 +49,7 @@ To do all these, I will ask you:
 1. For a target temperature (a.k.a. Production temperature) to heat the system to. 
    It is usually 300 Kelvin. 
 
-2. For a timespan for the heating. Usually 300 picoseconds.
+2. For a timespan for the heating. Usually 300 picoseconds (1 Kelvin/ps)
 
 3. For a timespan for equilibration. Usually 2000 picosenconds.
 

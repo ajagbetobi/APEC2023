@@ -19,22 +19,22 @@ chargechr=`grep "Chromo_Charge" Infos.dat | awk '{ print $2 }'`
 echo ""
 echo " This is the second step of APEC. 
 
-In this script, I will set up the molecular structure of the protein for dynamics in a few steps:
+In this script, I will prepare the molecular structure of the protein for dynamics in a few steps:
 
 A. Using Dowser, I will:
 
-  1. Remove water molecules that are not contained in the protein from the pdb crystal structures provided. 
+  1. Remove water molecules that are not bound to the protein from the pdb crystal structures provided. 
      This is because these water molecules are not usually important and can affect 
      our next step - Molecular Dynamics - undesirably. 
-  2. Add hydrogens to the protein backbone structure using, to ensure the protein is similar to in vivo structure. 
+  2. Add hydrogens to the protein backbone structure.
 
 B. Next, I will convert this new pdb structure file to .gro format for Gromacs - a molecular dynamics software. 
    Using Gromacs,  I will:
 
-  1. Add hydrogens to the sidechains, making the protein structure more accurate. 
-  2.  Minimise the whole protein structure. 
+  1. Add hydrogens to the sidechains. 
+  2. Minimize the whole protein structure. 
 
-With this optimised and complete structure, we are ready to set up Molecular Dynamics.
+With this optimized and complete structure, we are ready to set up Molecular Dynamics.
 
 NOTE:
 

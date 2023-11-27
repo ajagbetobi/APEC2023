@@ -28,12 +28,12 @@ cp -r $templatedir/$amber.ff .
 cd $amber.ff/
 
 echo ""
-echo " This is the third step of APEC overall. Here we will finish setting 
-       up the protein system for Molecular Dynamic calculations. 
+echo " This is the third step of APEC. Here we will finish setting 
+       up the protein system for Molecular Dynamics calculations. 
 
-It will happen in a few steps, viz:
+It will happen in a few steps:
 
-A. I will build up the flavin system to use in the MD. To do this, I will:
+A. I will format the flavin in preparation for the MD. To do this, I will:
 
    1. Ask for the flavin oxidation state model to use. Choose one of the following: 
     
@@ -72,10 +72,14 @@ D. I will embed this newly relaxed system in a solvent box and minimize it in to
     a. I will generate topology files for the minimization of the solvent box and its contained protein system.
     b. I will specify groups to be frozen during this minimization. This is usually localised to the chemically active QM regions. 
        This specification will be unique to the flavin tail specified in step A.2. above.
-    c. I will add ions to the solvent to neutralise the total charge of the system.
+    c. I will add ions to the solvent to neutralize the total charge of the system.
     d. I will ask if you want to add extra ions to the solvent to mimic experimental conditions or leave as is. 
     e. Finally, I will run the MM energy minimization of the solvated protein - excluding specific frozen region(s). 
-       Again, this is done by dividing the calculation into batches of 1000 steps to avoid crashing on photon."
+       Again, this is done by dividing the calculation into batches of 1000 steps to avoid crashing on photon.
+
+   Point d requires special attention. Often, it cn be enough to just neutralize the system and not add any additional ions 
+   (i.e., enter 0). However, solution ions may play an important part in stailizing the protein surface amino acids or even 
+   providing the correct electrostatic environment for the QM/MM calculations. E.g., see https://doi.org/10.1021/acs.jpclett.1c02173."
 
 echo "Would you like to proceed? [y/n]"
 echo ""

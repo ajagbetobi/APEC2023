@@ -45,11 +45,11 @@ connected to which) to the combined QMMM .xyz file from (d).
 
 NOTE:
 
-1. To do (d), I need a description of chromophore atoms unprovided in Tinker. This is already provided 
+1. To do step (d), I need a description of chromophore atoms, which are not usually available in Tinker. This is already provided 
    using atom types from AMBER. If there’s any error related to this, refer to Amber99sb.prm.
 
 2. If I am in Step_0, I start the QMMM optimizations in the next script by running Molcami_OptSCF.sh. 
-   If I am not, the next script to run is Molcami_direct_CASSCF.sh.   
+   If I am in Step_1 or later, the next script to run is Molcami_direct_CASSCF.sh.   
 
 "
 echo "Would you like to proceed? [y/n]"

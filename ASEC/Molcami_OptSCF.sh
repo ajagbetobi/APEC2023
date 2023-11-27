@@ -25,7 +25,7 @@ echo "
 This is the third step of four in which I prepare my MD results for APEC-QMMM calculations. 
 
 In this script, I will prepare an important file for the first QM calculations. 
-The goal of this step is to organise the information such that OpenMolcas-Tinker 
+The goal of this step is to organize the information such that OpenMolcas-Tinker 
 will understand my description of every atom in the QM and MM regions, and 
 the connection at the QMMM boundary. 
 
@@ -53,8 +53,8 @@ I will get all this information and create the .key file using the CHR_chain.xyz
 file provided at the beginning of APEC and the .xyz file from the last script (MD_2_QMMM.sh). 
 
 Next, I will provide charges describing the atoms in the QMMM system, so OpenMolcas-Tinker 
-knows which charges are to be on which atom. This is important in establishing 
-the charge interactions between QM and MM parts. 
+knows which charges are assigned to each atom. This is important in establishing 
+the charge (electrostatic) interactions between QM and MM parts. 
 
 At this point, the .key file will have information about the two subsytems, but not 
 their connection. Hence, I will break a -C-C- bond between QM and MM subsytems and 

@@ -55,7 +55,7 @@ I want to describe the protein environment as a smearing of the charges
 and atomistic spheres of a single protein around the chromophore. 
 I use fortan code (New_parameters.f) to do this. In the code, I will 
 scale the charges and van Der Waals parameters for each atom in the 100 
-configurations by dividing the values for each atom by 100, such that the
+configurations by "diluting" the effect of each atom by 100, such that the
 total of the charges and van Der Waals parameters will be equal to that 
 of a single configuration spread across a 3D space.
 
