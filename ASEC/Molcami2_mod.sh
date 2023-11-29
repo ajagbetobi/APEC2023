@@ -8,6 +8,49 @@ tinkerdir=`grep "Tinker" ../Infos.dat | awk '{ print $2 }'`
 templatedir=`grep "Template" ../Infos.dat | awk '{ print $2 }'`
 tempdir=`grep "tempdir" ../Infos.dat | awk '{ print $2 }'`
 
+echo ""
+echo " 
+In this step, I will use the optimised orbitals from the previous calculation 
+to calculate a more detailed description of the orbitals relevant to the 
+chromophore’s activity.
+
+From previous work ( see https://doi.org/10.1021/acs.jpcb.2c06475), we found 
+that the ten highest energy electrons were located in the last five occupied 
+pi orbitals. We also found that those five occupied orbitals and  next five 
+unoccupied pi-star orbitals are primarily involved in the excitation of flavin 
+chromophores in LOV proteins and increasing these numbers does not have much benefit. 
+
+Therefore, I will focus exclusively on these 10 electrons and 10 orbitals in 
+what I call the “active space”. 
+
+Using the Complete Active Space Self-Consistent Field (CASSCF) Method and 
+ANO-L-VDZ basis set, I will optimize these orbitals and electrons in the active space, 
+this time until concergence.
+
+**********NOTE:**********
+
+1. All calculation results will be located in the calculations/ProjectName_VDZ folder.
+
+
+"
+ 
+echo "Would you like to proceed? [y/n]"
+echo ""
+read proceed
+
+if [[ $proceed == "y" ]]; then
+   echo "
+   "
+   echo " Ok, I will now run ASEC.sh"
+   echo "
+   
+   "
+else
+   echo " Terminating ..."
+   echo ""
+   exit 0
+fi
+
 scf=${Project}_OptSCF
 
 if [[ -f $scf/$scf.out ]]; then

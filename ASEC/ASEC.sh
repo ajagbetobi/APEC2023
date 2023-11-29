@@ -63,10 +63,20 @@ I will add this information to the amber99sb.prm file I already have.
 
 And with this, I am ready to run QMMM calculations.
 
+The first calculation I will run is optimizing the chromophore’s orbitals.
+This is also called a single-point calculation. 
+At this stage, I will use the Hartree-Fock  Self-Consistent Field (HF-SCF) method 
+with ANO-L-VDZ basis set. 
+
+I truncate this step before convergence, because, while HF may not be the best 
+for flavin’s large structure, using it as a starting point will help reduce the 
+computational cost.
+
 
 **********NOTE:**********
 
 1. I use fortran code in this script, so if there’s any error be conscious of this.
+2. All calculation results from this step will be located in the calculations/ProjectName_OptSCF folder.
 
 "
  
