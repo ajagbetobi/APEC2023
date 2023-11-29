@@ -25,11 +25,11 @@ what I call the “active space”.
 
 Using the Complete Active Space Self-Consistent Field (CASSCF) Method and 
 ANO-L-VDZ basis set, I will optimize these orbitals and electrons in the active space, 
-this time until concergence.
+this time until convergence.
 
 **********NOTE:**********
 
-1. All calculation results will be located in the calculations/ProjectName_VDZ folder.
+1. All calculation results from this step will be located in the calculations/ProjectName_VDZ folder.
 
 
 "
@@ -41,7 +41,7 @@ read proceed
 if [[ $proceed == "y" ]]; then
    echo "
    "
-   echo " Ok, I will now run ASEC.sh"
+   echo " Ok, I will now run Molcami2_mod.sh"
    echo "
    
    "

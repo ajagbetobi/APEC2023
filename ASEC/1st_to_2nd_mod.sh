@@ -8,6 +8,73 @@ tinkerdir=`grep "Tinker" ../Infos.dat | awk '{ print $2 }'`
 templatedir=`grep "Template" ../Infos.dat | awk '{ print $2 }'`
 tempdir=`grep "tempdir" ../Infos.dat | awk '{ print $2 }'`
 
+
+
+echo ""
+echo " 
+
+Now that I have a better description of the active orbitals across the chromophore, 
+I can optimise the geometry - 3D structural arrangement - of the chromophore based 
+on this information.
+
+Before I do this, I will need you to confirm that my single point calculations from 
+the previous step were accurate. I will ask if the occupation numbers of the orbitals 
+I calculated are in the range 1.98 to 0.02. 
+
+This range is to show that the orbitals in the calculation are not fully occupied yet 
+have some electron density that should be included in the description of the chromophore.  
+
+If the orbitals do not have occupation numbers in this range, my calculations were likely 
+wrong in which case type “n” and press Enter. In this case, I will need you to manually 
+select the orbitals to be included in the active space before I continue. 
+
+To do this, you will:
+
+1. Download the output file ProjectName_VDZ.rasscf.molden found in the ProjectName_VDZ folder.
+
+2. Visualise the calculated orbitals in this output file. 
+
+3. Find the right orbital(s) to be placed in the active space.
+
+4. Run the script alter_orbital_mod.sh.
+
+However, if the orbitals have occupation numbers in the range 1.98 to 0.02, type “y” 
+and press Enter. With this information I can begin the geometry optimization using 
+the Complete Active Space Self-Consistent Field (CASSCF) Method and ANO-L-VDZ basis set.
+
+
+**********NOTE:**********
+
+1. All calculation results from this step will be located in the 
+calculations/ProjectName_VDZ_Opt folder.
+
+2. This step can take more than 5 days. Because photon has a 5 day limit on processes, 
+you may need to continue this calculation manually. To do this, you will:
+
+    a. Create a backup folder contining all the contents of the ProjectName_VDZ_Opt folder.
+    b. Rename the last optimized geometry (i.e. crLOV1Quinone_VDZ_Opt.Final.xyz_HighestNumber) as ProjectName_VDZ_Opt.xyz.
+    c. Submit the calculation with sbatch molcas-job.sh
+
+"
+ 
+echo "Would you like to proceed? [y/n]"
+echo ""
+read proceed
+
+if [[ $proceed == "y" ]]; then
+   echo "
+   "
+   echo " Ok, I will now run 1st_to_2nd_mod.sh"
+   echo "
+   
+   "
+else
+   echo " Terminating ..."
+   echo ""
+   exit 0
+fi
+
+
 sp=${Project}_VDZ
 
 if [[ -f $sp/$sp.out ]]; then
@@ -61,7 +128,7 @@ if [ -d $sp ]; then
       exit 0
    fi
 else
-   echo " CAS/3-21G single point folder not found! Check what is wrong"
+   echo " CAS/ANO-L-VDZ single point folder not found! Check what is wrong"
    echo " Terminating..."
    exit 0
 fi
@@ -88,7 +155,7 @@ while [  $contr = 0 ]; do
       else
 	 contr=1
          if [[ $answer == "y" ]]; then
-            echo " Going ahead with the CAS/3-21G optimization"
+            echo " Going ahead with the CAS/ANO-L-VDZ  optimization"
 	    echo ""
 	 else
 	    echo " You might have a problem with active space selection. To fix it:"
@@ -110,7 +177,7 @@ done
 #
 new=${Project}_VDZ_Opt
 if [ -d $new ]; then
-   ./smooth_restart.sh $new "Do you want to re-run the QM/MM 3-21G optimization? (y/n)" 6
+   ./smooth_restart.sh $new "Do you want to re-run the QM/MM ANO-L-VDZ  optimization? (y/n)" 6
    if [[ ! -f Infos.dat ]]; then
       mv no.Infos.dat Infos.dat
       exit 0

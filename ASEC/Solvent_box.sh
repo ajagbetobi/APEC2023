@@ -28,8 +28,9 @@ cp -r $templatedir/$amber.ff .
 cd $amber.ff/
 
 echo ""
-echo " This is the third step of APEC. Here we will finish setting 
-       up the protein system for Molecular Dynamics calculations. 
+echo " 
+This is the third step of APEC. Here we will finish setting 
+up the protein system for Molecular Dynamics calculations. 
 
 It will happen in a few steps:
 

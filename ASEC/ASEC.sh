@@ -63,6 +63,12 @@ I will add this information to the amber99sb.prm file I already have.
 
 And with this, I am ready to run QMMM calculations.
 
+*************************************************************** 
+
+      Optimizing The Chromophore's Molecular Orbitals 
+
+*************************************************************** 
+
 The first calculation I will run is optimizing the chromophore’s orbitals.
 This is also called a single-point calculation. 
 At this stage, I will use the Hartree-Fock  Self-Consistent Field (HF-SCF) method 
