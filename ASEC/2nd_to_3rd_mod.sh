@@ -8,6 +8,51 @@ tinkerdir=`grep "Tinker" ../Infos.dat | awk '{ print $2 }'`
 templatedir=`grep "Template" ../Infos.dat | awk '{ print $2 }'`
 tempdir=`grep "tempdir" ../Infos.dat | awk '{ print $2 }'`
 
+
+
+
+echo ""
+echo " 
+
+So far, I have calculated a good approximation of the orbitals and geometry 
+of the flavin chromophore. But I can make them better with a slight improvement 
+of the basis set. 
+
+In this step, I will make this improvement using the results from the most recent 
+geometry optimization. I will take this CASSCF/ANO-L-VDZ optimized geometry and 
+calculate the orbitals - i.e. distribution of electron densities - of this structure 
+using the same CASSCF method, but an improved ANO-L-VDZP basis set. The “P” at the end
+of the basis set is the improvement. It means that the calculation I will run in this 
+step will take into account electron polarization which ANO-L-VDZ did not. 
+
+**********NOTE:**********
+
+1. All calculation results from this step will be located in the 
+calculations/ProjectName_VDZP folder.
+
+"
+ 
+echo "Would you like to proceed? [y/n]"
+echo ""
+read proceed
+
+if [[ $proceed == "y" ]]; then
+   echo "
+   "
+   echo " Ok, I will now run 2nd_to_3rd_mod.sh"
+   echo "
+   
+   "
+else
+   echo " Terminating ..."
+   echo ""
+   exit 0
+fi
+
+
+
+
+
 opt=${Project}_VDZ_Opt
 
 if [[ -f $opt/$opt.out ]]; then
@@ -58,13 +103,13 @@ if [ -d $opt ]; then
       echo " CAS optimization ended successfully"
       echo ""
    else
-      echo " The CAS optimization did not finished well."
+      echo " The CAS optimization did not finish well."
       echo " Please check if the assigned hours expired or if some error occurred."
       echo ""
       echo " If you need to restart, run the restart.sh script."
       echo " Otherwise find out what is the error and re-run 1st_to_2nd.sh."
       echo ""
-      echo " 2nd_to_3rd.sh will terminate now!"
+      echo " 2nd_to_3rd.sh will terminate now."
       echo ""
       cp $templatedir/restart.sh ../
       exit 0
