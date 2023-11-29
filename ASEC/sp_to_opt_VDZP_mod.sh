@@ -8,13 +8,83 @@ tinkerdir=`grep "Tinker" ../Infos.dat | awk '{ print $2 }'`
 templatedir=`grep "Template" ../Infos.dat | awk '{ print $2 }'`
 tempdir=`grep "tempdir" ../Infos.dat | awk '{ print $2 }'`
 
+
+
+echo ""
+echo " 
+
+With the high level ANO-L-VDZP orbitals calculated, I will now optimize the 
+geometry of the flavin chromophore. 
+
+As with the previous geometry optimization, I will use the orbitals from the
+last calculation. To ensure the orbitals calculated are those responsible for
+the chromophores activity, I will need your confirmation that the occupation 
+numbers calculated are within the range 1.98 to 0.02. 
+
+This range is to show that the orbitals in the calculation are not fully occupied 
+yet have some electron density that should be included in the description of the 
+chromophore.  
+
+If the orbitals do not have occupation numbers in this range, my calculations were 
+likely wrong in which case type “n” and press Enter. In this case, I will need you 
+to manually select the orbitals to be included in the active space before I continue. 
+
+To do this, you will:
+
+1. Download the output file ProjectName_VDZP.rasscf.molden found in the ProjectName_VDZP folder.
+
+2. Visualise the calculated orbitals in this output file. 
+
+3. Find the right orbital(s) to be placed in the active space.
+
+4. Run the script alter_orbital_mod.sh.
+
+However, if the orbitals have occupation numbers in the range 1.98 to 0.02, type “y” 
+and press Enter. With this information I can begin the geometry optimization using 
+the Complete Active Space Self-Consistent Field (CASSCF) Method and ANO-L-VDZP basis set.
+
+
+**********NOTE:**********
+
+1. All calculation results from this step will be located in the 
+calculations/ProjectName_VDZP_Opt folder.
+
+2. This step can take more than 5 days. Because photon has a 5 day limit on processes, 
+you may need to continue this calculation manually. To do this, you will:
+
+    a. Create a backup folder contining all the contents of the ProjectName_VDZP_Opt folder.
+    b. Rename the last optimized geometry (i.e. crLOV1Quinone_VDZP_Opt.Final.xyz_HighestNumber) as ProjectName_VDZP_Opt.xyz.
+    c. Submit the calculation with sbatch molcas-job.sh
+"
+ 
+echo "Would you like to proceed? [y/n]"
+echo ""
+read proceed
+
+if [[ $proceed == "y" ]]; then
+   echo "
+   "
+   echo " Ok, I will now run sp_to_opt_VDZP_mod.sh"
+   echo "
+   
+   "
+else
+   echo " Terminating ..."
+   echo ""
+   exit 0
+fi
+
+
+
+
+
 sp=${Project}_VDZP
 if [[ -f $sp/$sp.out ]]; then
    echo ""
    echo " *************************************************************"
    echo "                      Warning!"
    echo ""
-   echo " $sp.out already excist. We are goint to use it..."
+   echo "     $sp.out already exists. I am going to use it..."
    echo ""
    echo " *************************************************************"
    echo ""
