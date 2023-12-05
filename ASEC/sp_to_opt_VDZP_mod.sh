@@ -21,10 +21,6 @@ last calculation. To ensure the orbitals calculated are those responsible for
 the chromophores activity, I will need your confirmation that the occupation 
 numbers calculated are within the range 1.98 to 0.02. 
 
-This range is to show that the orbitals in the calculation are not fully occupied 
-yet have some electron density that should be included in the description of the 
-chromophore.  
-
 If the orbitals do not have occupation numbers in this range, my calculations were 
 likely wrong in which case type “n” and press Enter. In this case, I will need you 
 to manually select the orbitals to be included in the active space before I continue. 
@@ -33,7 +29,7 @@ To do this, you will:
 
 1. Download the output file ProjectName_VDZP.rasscf.molden found in the ProjectName_VDZP folder.
 
-2. Visualise the calculated orbitals in this output file. 
+2. Visualise the calculated orbitals in this output file using Molden. 
 
 3. Find the right orbital(s) to be placed in the active space.
 
@@ -50,11 +46,8 @@ the Complete Active Space Self-Consistent Field (CASSCF) Method and ANO-L-VDZP b
 calculations/ProjectName_VDZP_Opt folder.
 
 2. This step can take more than 5 days. Because photon has a 5 day limit on processes, 
-you may need to continue this calculation manually. To do this, you will:
+you may need to continue this calculation manually by running calcRestart.sh.
 
-    a. Create a backup folder contining all the contents of the ProjectName_VDZP_Opt folder.
-    b. Rename the last optimized geometry (i.e. crLOV1Quinone_VDZP_Opt.Final.xyz_HighestNumber) as ProjectName_VDZP_Opt.xyz.
-    c. Submit the calculation with sbatch molcas-job.sh
 "
  
 echo "Would you like to proceed? [y/n]"

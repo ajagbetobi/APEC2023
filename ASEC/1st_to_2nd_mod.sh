@@ -14,15 +14,16 @@ echo ""
 echo " 
 
 Now that I have a better description of the active orbitals across the chromophore, 
-I can optimise the geometry - 3D structural arrangement - of the chromophore based 
-on this information.
+I can optimize the geometry - 3D structural arrangement - of the chromophore based 
+on the more accurate (CASSCF) wave function
 
 Before I do this, I will need you to confirm that my single point calculations from 
 the previous step were accurate. I will ask if the occupation numbers of the orbitals 
 I calculated are in the range 1.98 to 0.02. 
 
-This range is to show that the orbitals in the calculation are not fully occupied yet 
-have some electron density that should be included in the description of the chromophore.  
+This range is to show that the orbitals in the calculation really need to be included 
+in the active space. Otherwise, it is sufficient to treat them at the Hartree-Fock level
+where their occupation would be 0.0 and 2.0 in any case.
 
 If the orbitals do not have occupation numbers in this range, my calculations were likely 
 wrong in which case type “n” and press Enter. In this case, I will need you to manually 
@@ -32,7 +33,7 @@ To do this, you will:
 
 1. Download the output file ProjectName_VDZ.rasscf.molden found in the ProjectName_VDZ folder.
 
-2. Visualise the calculated orbitals in this output file. 
+2. Visualise the calculated orbitals in this output file using Molden. 
 
 3. Find the right orbital(s) to be placed in the active space.
 
@@ -49,11 +50,7 @@ the Complete Active Space Self-Consistent Field (CASSCF) Method and ANO-L-VDZ ba
 calculations/ProjectName_VDZ_Opt folder.
 
 2. This step can take more than 5 days. Because photon has a 5 day limit on processes, 
-you may need to continue this calculation manually. To do this, you will:
-
-    a. Create a backup folder contining all the contents of the ProjectName_VDZ_Opt folder.
-    b. Rename the last optimized geometry (i.e. crLOV1Quinone_VDZ_Opt.Final.xyz_HighestNumber) as ProjectName_VDZ_Opt.xyz.
-    c. Submit the calculation with sbatch molcas-job.sh
+you may need to continue this calculation manually by running calcRestart.sh.
 
 "
  

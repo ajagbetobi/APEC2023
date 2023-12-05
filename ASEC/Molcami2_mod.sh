@@ -10,22 +10,21 @@ tempdir=`grep "tempdir" ../Infos.dat | awk '{ print $2 }'`
 
 echo ""
 echo " 
-In this step, I will use the optimised orbitals from the previous calculation 
-to calculate a more detailed description of the orbitals relevant to the 
-chromophore’s activity.
+In this step, I will use the optimized orbitals from the previous calculation 
+to generate orbitals at the Complete Active Space Self-Consistent Field (CASSCF) 
+level of theory. CASSCF provides a more accurate
+description of the orbitals relevant to the chromophore’s activity. Those orbitals 
+are placed in the "active space" where they are optimized along other active space orbitals.
 
-From previous work ( see https://doi.org/10.1021/acs.jpcb.2c06475), we found 
-that the ten highest energy electrons were located in the last five occupied 
-pi orbitals. We also found that those five occupied orbitals and  next five 
-unoccupied pi-star orbitals are primarily involved in the excitation of flavin 
-chromophores in LOV proteins and increasing these numbers does not have much benefit. 
+From previous work ( see https://doi.org/10.1021/acs.jpcb.2c06475), we found that
+for the spectroscopy of flavin, it is sufficient to include 10 active space orbitals. 
+Five of those are occupied pi orbitals (i.e., filled with 10 electrons) and 5 are 
+unoccupied pi-star. Those are the orbitals that are primarily involved in the excitation of flavin 
+chromophores in LOV proteins, and increasing the number of orbitals in the active space
+does not have much benefit. 
 
-Therefore, I will focus exclusively on these 10 electrons and 10 orbitals in 
-what I call the “active space”. 
-
-Using the Complete Active Space Self-Consistent Field (CASSCF) Method and 
-ANO-L-VDZ basis set, I will optimize these orbitals and electrons in the active space, 
-this time until convergence.
+Using the CASSCF method and ANO-L-VDZ basis set, I will optimize these orbitals and electrons 
+in the active space, this time until convergence.
 
 **********NOTE:**********
 

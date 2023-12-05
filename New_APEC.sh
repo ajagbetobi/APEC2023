@@ -50,7 +50,9 @@ camino="/userapp/APEC_Spr2023/New_APEC/template"
 cp $camino/Infos.dat .
 
 echo ""
-echo " This is the first step of APEC as a whole. For every instance you run APEC, this file is a requirement. 
+echo " 
+
+This is the first step of APEC as a whole. For every instance you run APEC, this file is a requirement. 
 
 In this script, I will set up files and folder structures for further calculations, doing so by copying files and downloading programs from the supercomputer’s memory. 
 For this, I will do the following in order:

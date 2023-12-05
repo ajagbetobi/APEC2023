@@ -15,15 +15,15 @@ echo ""
 echo " 
 
 So far, I have calculated a good approximation of the orbitals and geometry 
-of the flavin chromophore. But I can make them better with a slight improvement 
+of the flavin chromophore. But I can make them better with an improvement 
 of the basis set. 
 
 In this step, I will make this improvement using the results from the most recent 
 geometry optimization. I will take this CASSCF/ANO-L-VDZ optimized geometry and 
 calculate the orbitals - i.e. distribution of electron densities - of this structure 
 using the same CASSCF method, but an improved ANO-L-VDZP basis set. The “P” at the end
-of the basis set is the improvement. It means that the calculation I will run in this 
-step will take into account electron polarization which ANO-L-VDZ did not. 
+of the basis set means that the basis set now includes polarization functions (e.g., d 
+orbitals for C/N/O/etc atoms and p orbitals for H atoms) which ANO-L-VDZ did not do. 
 
 **********NOTE:**********
 

@@ -17,7 +17,9 @@ chargechr=`grep "Chromo_Charge" Infos.dat | awk '{ print $2 }'`
 
 
 echo ""
-echo " This is the second step of APEC. 
+echo " s
+
+This is the second step of APEC. 
 
 In this script, I will prepare the molecular structure of the protein for dynamics in a few steps:
 
