@@ -42,9 +42,9 @@ taking into account the effect of the averaged protein environment.
 This new_rtp file will contain information created by:
 
 1. Collecting the charges from CASSCF Opt(10,10)/ANO-L-VDZP Molcas output and rounding them 
-up so they sum to exactly the total charge of the QM part (Where’s this “total charge” gotten 
-from if not molcas?) because Molcas calculations include extra decimal places for each atom 
-in the QM section of the chromophore. 
+up so they sum to exactly the total charge of the QM part (i.e. the isoalloxazine ring, not the phosphate chain) 
+because Molcas calculations include extra decimal places for the charge on each atom in the QM section of the chromophore. 
+
 2. Labelling the chromophore MM atoms with different charges i.e. 0 for the fixed atoms in 
 the chromophore tail and 1 for the mobile (MD) atoms - this only applies to FAD.
 
