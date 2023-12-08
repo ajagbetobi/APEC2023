@@ -23,6 +23,66 @@ nna=`grep "Added_NAs" ../Infos.dat | awk '{ print $2 }'`
 ncl=`grep "Added_CLs" ../Infos.dat | awk '{ print $2 }'`
 tempdir=`grep "tempdir" ../Infos.dat | awk '{ print $2 }'`
 
+
+
+
+echo ""
+echo " 
+
+Now that I’ve gotten a detailed optimized chromphore structure using 
+the CASSCF method and ANO-L-VDZP basis set, I will integrate this into 
+the protein configuration closest to the average. 
+
+Before I do this I will ask you to confirm that the orbitals calculated 
+have occupatioin numbers in the optimal range (1.98 - 0.02 ).  If the 
+orbitals do not have occupation numbers in this range, my calculations 
+were likely wrong in which case type “n” and press Enter. If you do this, 
+I will need you to manually select the orbitals to be included in the 
+active space before I continue. 
+
+To do this, you will:
+
+1. Download the output file ProjectName_VDZP_Opt.rasscf.molden found in the 
+ProjectName_VDZP folder.
+
+2. Visualise the calculated orbitals in this output file. 
+
+3. Find the right orbital(s) to be placed in the active space.
+
+4. Run the script alter_orbital_mod.sh.
+
+However, if the orbitals have occupation numbers in the range 1.98 to 0.02, 
+type “y” and press Enter. With this done, I will proceed with the integration 
+by inserting this new geometry into the representative configuration accounting 
+for the charges in the solvent and the protein. 
+
+Lastly, in this script I will convert the file containing the protein with the 
+newly optimized chromophore to the pdb format for the next iteration of APEC calculations.
+
+**********NOTE:**********
+
+1. I use fortran code in this script, so if there’s any error be conscious of this.
+
+"
+ 
+echo "Would you like to proceed? [y/n]"
+echo ""
+read proceed
+
+if [[ $proceed == "y" ]]; then
+   echo "
+   "
+   echo " Ok, I will now run finalPDB_mod.sh"
+   echo "
+   
+   "
+else
+   echo " Terminating ..."
+   echo ""
+   exit 0
+fi
+
+
 numions=$(($nna+$ncl))
 
 #
@@ -125,7 +185,7 @@ while [  $contr = 0 ]; do
             echo " 2. - Find the right orbital(s) to be placed in the active space"
             echo " 3. - Run the script alter_orbital_mod.sh"
             echo ""
-            echo " Now 3rd_to_4th_mod.sh will terminate"
+            echo " Now finalPDB_mod.sh will terminate"
             echo ""
             cp $templatedir/ASEC/alter_orbital_mod.sh .
             exit 0

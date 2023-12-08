@@ -16,6 +16,51 @@ updch=`grep "Update_charges" Infos.dat | awk '{ print $2 }'`
 ions=`grep "Added_Ions" Infos.dat | awk '{ print $2 }' | awk '{print substr ($0, 0, 1)}'`
 amber=`grep "AMBER" Infos.dat | awk '{ print $2 }'`
 
+
+echo ""
+echo " 
+
+In this script, I will collect, create and organise all files and folders 
+necessary to run another iteration of the APEC protocol - including a folder 
+for the next iteration.
+
+As part of this process, I will update the charges of the chromophore in the 
+protein by including the information from the new_rtp file created in the last 
+script in the aminoacids.rtp file.
+
+**********NOTE:**********
+
+In the iterations after the first (named Step_1 onwards), I  copy selected scripts 
+run in Step_0 and use different scripts, as I will run a shorter version of APEC in the following steps. 
+
+This is because, in Step_0 I started with a clean slate and had to describe the system. 
+For every Step afterwards, this is not the case.
+
+So in Step_1, I will use the information from Step_0 - such as the MD_NPT results - to run APEC in Step_1. 
+
+For every iteration after Step_0, I will repeat the cycle of using the results of previous iterations as 
+starting points for APEC. So, be conscious of your inputs as they will affect future Steps.
+
+"
+ 
+echo "Would you like to proceed? [y/n]"
+echo ""
+read proceed
+
+if [[ $proceed == "y" ]]; then
+   echo "
+   "
+   echo " Ok, I will now run Next_Iteration.sh"
+   echo "
+   
+   "
+else
+   echo " Terminating ..."
+   echo ""
+   exit 0
+fi
+
+
 if [ -d ../Step_$(($Step+1)) ]; then
       echo " Folder \"Step_$(($Step+1))\" found! Something is wrong ..."
       echo " Terminating ..."

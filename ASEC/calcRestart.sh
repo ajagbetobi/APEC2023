@@ -14,7 +14,7 @@ in the original folder.
 
 "
  
-echo "Would you like to proceed?"
+echo "Would you like to proceed? [y/n]"
 echo ""
 read proceed
 
@@ -34,9 +34,9 @@ fi
 restartCalc () {
     calctype="$1"
 
-    if [[  -f ${Project}_${calctype}/${Project}_${calctype}.out ]];then 
+    if [[  $(grep -iq "Happy landing!" "${Project}_${calctype}/${Project}_${calctype}.out") ]];then 
         echo ""
-        echo "Found an output file for this calculation."
+        echo "This calculation is Converged."
         echo ""
         echo "Check ${Project}_${calctype}/${Project}_${calctype}.out"
         echo ""
@@ -80,7 +80,7 @@ restartCalc () {
     rm -rf * 
 
     # Copy Select files from backup  
-    cp ../${highestBackup}/{amber99sb.prm,molcas-job.sh,${Project}_${calctype}.input,${Project}_${calctype}.JobIph_new,${Project}_${calctype}.Espf.Data} .
+    cp ../${highestBackup}/{amber99sb.prm,molcas-job.sh,${Project}_${calctype}.input,${Project}_${calctype}.JobIph_new,${Project}_${calctype}.Espf.Data,${Project}_${calctype}.key} .
     cp ${Project}_${calctype}.JobIph_new ${Project}_${calctype}.JobIph
 
     # Go to Latest backup folder 

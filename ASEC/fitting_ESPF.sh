@@ -30,6 +30,51 @@ else
    chargechr=`grep "Chromo_Charge" Infos.dat | awk '{ print $2 }'`
    cola=`grep "Tail" Infos.dat | awk '{ print $2 }'`
 fi
+
+
+echo ""
+echo " 
+
+In this step, I will generate a new_rtp file detailing the new charges of the chromophore. 
+These charges were generated in the last five steps by QM/MM calculations on the chromophore 
+taking into account the effect of the averaged protein environment. 
+
+This new_rtp file will contain information created by:
+
+1. Collecting the charges from CASSCF Opt(10,10)/ANO-L-VDZP Molcas output and rounding them 
+up so they sum to exactly the total charge of the QM part (Where’s this “total charge” gotten 
+from if not molcas?) because Molcas calculations include extra decimal places for each atom 
+in the QM section of the chromophore. 
+2. Labelling the chromophore MM atoms with different charges i.e. 0 for the fixed atoms in 
+the chromophore tail and 1 for the mobile (MD) atoms - this only applies to FAD.
+
+**********NOTE:**********
+
+1. I use fortran code in this script, so if there’s any error be conscious of this.
+
+
+"
+ 
+echo "Would you like to proceed? [y/n]"
+echo ""
+read proceed
+
+if [[ $proceed == "y" ]]; then
+   echo "
+   "
+   echo " Ok, I will now run fitting_ESPF.sh"
+   echo "
+   
+   "
+else
+   echo " Terminating ..."
+   echo ""
+   exit 0
+fi
+
+
+
+
 cd ESPF_charges
 
 #
@@ -43,23 +88,23 @@ if [[ -f ${Project}_ESPF.out ]]; then
       echo ""
    else
       echo ""
-      echo " It seems to be that the ESPF calculation"
-      echo " did not finish yet. Please check ..."
+      echo " It seems the ESPF calculation has not "
+      echo " finished yet. Please check ..."
       echo ""
       exit 0
    fi
 else
    echo ""
    echo " There is something wrong with the ESPF calculation."
-   echo " Please check it. Finishing ..."
+   echo " Please check it. Terminating ..."
    echo ""
    exit 0
 fi
 
 #
-# Colecting the charges from molcas output and rounding to the total charge
+# Collecting the charges from molcas output and rounding to the total charge
 # to exactly the total charge of the QM part. 
-# (there is alwais 0.002.. from molcas output)
+# (there is always 0.002.. from molcas output)
 #
 numchr=`head -n1 ${chromophore}.xyz | awk '{ print $1 }'`
 if [[ $cola == "FMN" ]]; then
@@ -229,12 +274,12 @@ if [[ $calculations == "false" ]]; then
       echo ""
       echo "*************************************************************************"
       echo ""
-      echo " Continuum with the MD_NPT.sh for equilibrating the volume of the system."
+      echo " Continue with the MD_NPT.sh for equilibrating the volume of the system."
       echo ""
       echo "*************************************************************************"
       else
       echo ""
-      echo " Continuum with the MD_NPT.sh."
+      echo " Continue with the MD_NPT.sh."
       echo ""
       echo ""
    fi
