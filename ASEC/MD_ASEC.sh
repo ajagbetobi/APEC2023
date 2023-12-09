@@ -24,7 +24,7 @@ ncl=`grep "Added_CLs" Infos.dat | awk '{ print $2 }'`
 echo ""
 echo " 
 
-This is the first step of four in which I prepare my MD results for APEC-QMMM calculations. 
+This is the first step in which I prepare my MD results for APEC-QMMM calculations. 
 In this step, I will create the averaged protein and solvent environment.
 
 First, I will check for parallel MD runs. If they exist, I will ensure they have outputs. 

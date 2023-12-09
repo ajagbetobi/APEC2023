@@ -19,6 +19,108 @@ ilov=`grep "iLOV_RESP" Infos.dat | awk '{ print $2 }'`
 chargechr=`grep "Chromo_Charge" Infos.dat | awk '{ print $2 }'`
 
 #
+
+
+echo ""
+echo " 
+
+This is the third step in which I prepare my MD results for APEC-QMMM calculations. 
+
+In this script, I will prepare an important file for the first QM calculations. 
+There are two goals in this step:
+
+1.  Organize the information gotten so far such that OpenMolcas-Tinker 
+	will understand my description of every atom in the QM and MM regions, and 
+	the connection at the QMMM boundary. 
+
+	For this, I will create a .key file describing all atoms and charges in 
+	the QMMM connected system. This .key file will contain labels QM,MM,LA,LQ, 
+	LM, FX and XX, depending on the flavin cofactor. 
+
+	For context: 
+
+	a. “MM” are the atoms of the chromophore tail that will be MM optimized 
+	during the QM/MM optimization (they are frozen during the MD).
+
+	b. “QM” are the atoms to be optimized quantum mechanically (also frozen during the MD).
+
+	c. “LA” is the link atom.
+
+	d. “LQ” and “LM” are the QM/MM frontier atoms. The link atom will be placed between them.
+
+	e. “FX” indicates MM atoms of the tail that are frozen during the MD. 
+
+	f. “XX” indicates MM atoms of the tail that are relaxed during the MD. I will represent 
+	them as APEC pseudo-atoms in the QM/MM optimization.
+
+	I will get all this information and create the .key file using the CHR_chain.xyz 
+	file provided at the beginning of APEC and the .xyz file from the last script (MD_2_QMMM.sh). 
+
+	Next, I will provide charges describing the atoms in the QMMM system, so OpenMolcas-Tinker 
+	knows which charges are assigned to each atom.
+ 
+	These charges will be assigned thus:
+
+	a. 1 for atoms of the tail treated with Molecular Dynamics (relevant to only FAD ), 
+	b. 0 for the frozen atoms of the tail treated with Molecular Mechanics
+
+	Also, the charges of the MM atoms are approximated to ensure total charge of the 
+	QM+MM system is the desired charge. For neutral flavin chromophores (e.g. FMN, FMNH and FMNH2), 
+	this total charge would be 0, while for the anionic chromophores, it would be -1.
+
+	This is important in establishing the charge (electrostatic) interactions between QM and MM parts. 
+
+	At this point, the .key file will have information about the two subsytems, but not 
+	their connection. Hence, I will break a -C-C- bond between QM and MM subsytems and 
+	add a Link Atom (LA) between them. 
+
+	In this case, the link atom will be a Hydrogen atom. This atom will help translate 
+	the QM part as lumiflavin to the software (OpenMolcas) and the extending chromophore 
+	chain will be treated as MM atoms with point charges using Tinker. To the MM portion, 
+	the hydrogen link atom will having a tiny charge, but because of the closeness to the 
+	carbon next to it, this charge will be shared to atoms in the environment and the hydrogen 
+	charge set to zero. This is done to avoid artefacts in our calculations.
+
+
+2. Inserting the optimized chromophore structure of the previous Step into the .xyz in order 
+to avoid mathematical errors resulting from file conversions and the addition of a Link Atom. 
+
+
+With all these done, I will create a folder where I will run all QM focused QMMM calculations.
+
+**********NOTE:**********
+
+1. I use fortran code in this script, so if there’s any error be conscious of this.
+
+
+"
+echo "Would you like to proceed? [y/n]"
+echo ""
+read proceed
+
+if [[ $proceed == "y" ]]; then
+   echo "
+   "
+   echo " Ok, I will now run Molcami_direct_CASSCF.sh"
+   echo "
+   
+   "
+else
+   echo " Terminating ..."
+   echo ""
+   exit 0
+fi
+
+
+
+
+
+
+
+
+
+
+
 # Copying and running the script for Tinker files preparation
 #
 #
@@ -172,7 +274,7 @@ if [[ -f $Project-tk.xyz_2 ]] ; then
          ./update_infos.sh "Molcami_OptSCF" "YES" Infos.dat
       fi
 #
-# Reformating the final xyz tinket file
+# Reformating the final xyz tinker file
 #
 cat > reformat.f << YOE
       Program reformat
@@ -251,7 +353,7 @@ fi
 calcul=1
 
 #
-# Collecting data from the previos step
+# Collecting data from the previous step
 #
 if [[ -a ${newdir}.JobIph_old ]]; then
    cp ${newdir}.JobIph_old calculations/${newdir}/${newdir}.JobIph
@@ -293,7 +395,7 @@ else
 fi
 
 #
-# Submiting the QM/MM geometry optimization
+# Preparing the QM/MM geometry optimization
 #
 cd calculations
 cd ${newdir}/
@@ -337,7 +439,7 @@ cp $templatedir/ASEC/ASEC_direct_CASSCF.sh .
 echo ""
 echo "***************************************************************************"
 echo ""
-echo "Run ASEC_direct_CASSCF.sh to generate the final coordinate file and submitt"
+echo "Run ASEC_direct_CASSCF.sh to generate the final coordinate file and submit"
 echo ""
 echo "***************************************************************************"
 echo ""

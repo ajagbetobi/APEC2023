@@ -17,7 +17,7 @@ chromophore=`grep "chromophore" Infos.dat | awk '{ print $2 }'`
 echo ""
 echo " 
 
-This is the second step of four in which I prepare my MD results for APEC-QMMM calculations. 
+This is the second step in which I prepare my MD results for APEC-QMMM calculations. 
 
 In this script, I translate my outputs from Molecular Dynamics to a format relevant to QMMM calculations. 
 I use Tinker-OpenMolcas for QMMM calculations and Gromacs for MD, and, because the software both require 

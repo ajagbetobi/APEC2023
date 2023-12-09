@@ -36,7 +36,7 @@ echo ""
 echo " 
 
 In this step, I will generate a new_rtp file detailing the new charges of the chromophore. 
-These charges were generated in the last five steps by QM/MM calculations on the chromophore 
+These charges were generated in the recent steps by QM/MM calculations on the chromophore 
 taking into account the effect of the averaged protein environment. 
 
 This new_rtp file will contain information created by:
