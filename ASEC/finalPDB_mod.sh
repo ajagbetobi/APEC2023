@@ -35,10 +35,10 @@ the protein configuration closest to the average.
 
 Before I do this I will ask you to confirm that the orbitals calculated 
 have occupatioin numbers in the optimal range (1.98 - 0.02 ).  If the 
-orbitals do not have occupation numbers in this range, my calculations 
-were likely wrong in which case type “n” and press Enter. If you do this, 
-I will need you to manually select the orbitals to be included in the 
-active space before I continue. 
+orbitals do not have occupation numbers in this range, that means that 
+the active space needs to be altered. In that case type “n” and press Enter.
+If you do this, I will need you to manually select the orbitals to be included 
+in the active space before I continue. 
 
 To do this, you will:
 
